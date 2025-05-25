@@ -63,3 +63,44 @@ go run .
 - You should see a new database file `tubely.db` created in the root directory.
 - You should see a new `assets` directory created in the root directory, this is where the images will be stored.
 - You should see a link in your console to open the local web page.
+
+
+# 4. Register an Account
+
+To begin using Tubely, sign up with the following credentials:
+
+- **Email:** `admin@tubely.com`  
+- **Password:** `password`
+
+> ⚠️ These are sample credentials for demonstration or testing purposes. Please update your password if this will be used in production.
+
+---
+
+# 5. Create a New Video
+
+After logging in, create your first video with the following details:
+
+- **Title:** `Boots, an Emote Story`
+- **Description:**  
+  `A short film about the many faces of Boots`
+
+To do this:
+
+1. Navigate to the **"Create Video"** or **"New Upload"** section in the dashboard.
+2. Fill in the **Title** and **Description** fields as shown above.
+3. Upload your video file (if required).
+4. Click **Submit** or **Publish**.
+
+---
+
+You're all set! 🎬
+
+Feel free to explore other features like editing videos, managing your profile, and engaging with other users.
+
+If you encounter any issues, please contact support at `support@tubely.com`.
+
+---
+
+## 📄 License
+
+This project is provided for demonstration and internal use. All content remains the property of its respective creators.
