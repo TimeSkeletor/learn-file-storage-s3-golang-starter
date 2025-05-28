@@ -25,6 +25,7 @@ type apiConfig struct {
 	s3Region         string
 	s3CfDistribution string
 	port             string
+	ffProbeCmd   string
 }
 
 func main() {
@@ -87,6 +88,11 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
+	ffProbeCmd := os.Getenv("FFPROBECMD")
+	if ffProbeCmd == "" {
+		log.Fatal("FFPROBECMD environment variable is not set")
+	}
+
 	cfg := apiConfig{
 		db:               db,
 		jwtSecret:        jwtSecret,
@@ -98,6 +104,7 @@ func main() {
 		s3Region:         s3Region,
 		s3CfDistribution: s3CfDistribution,
 		port:             port,
+		ffProbeCmd:       ffProbeCmd,
 	}
 
 	err = cfg.ensureAssetsDir()

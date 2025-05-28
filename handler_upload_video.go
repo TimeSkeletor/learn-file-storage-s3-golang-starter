@@ -86,12 +86,22 @@ func (cfg *apiConfig) handlerUploadVideo(w http.ResponseWriter, r *http.Request)
 		respondWithError(w, http.StatusInternalServerError, "Unable to generate file name", err)
 		return
 	}
+
+	aspectRatio, err := cfg.getVideoAspectRatio(tempFile.Name())
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, "Unable to get aspect ratio", err)
+		return
+	}
+	aspectRatioString := getAspectRatio(aspectRatio)
+
 	newUuidString := base64.RawURLEncoding.EncodeToString(newVideoID)
 	assetPath := getAssetPath(newUuidString, mediaType)
 
+	assetPathWithRatio := fmt.Sprintf("%s/%s", aspectRatioString, assetPath)
+
 	objectParams := &s3.PutObjectInput{
 		Bucket:      &cfg.s3Bucket,
-		Key:         &assetPath,
+		Key:         &assetPathWithRatio,
 		Body:        tempFile,
 		ContentType: &mediaType,
 	}
@@ -102,7 +112,7 @@ func (cfg *apiConfig) handlerUploadVideo(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	newUrl := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", cfg.s3Bucket, cfg.s3Region, assetPath)
+	newUrl := fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s/%s", cfg.s3Bucket, cfg.s3Region, aspectRatioString, assetPath)
 	video.VideoURL = &newUrl
 
 	err = cfg.db.UpdateVideo(video)
